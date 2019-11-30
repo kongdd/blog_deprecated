@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  Fourier Matlab script &ndash; 孔sysu
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="clc, close all% load(&amp;#39;fourier_data.mat&amp;#39;) % load(&amp;#39;fourier_qiang.mat&amp;#39;) %% fourier main script % Writed By Dong 2014/07/22 % x=[1 1.4 1.0 1.4 1 1.4 1.0 1.4]; % x=[0 3 2 0 -1]; % x=[1 1 1 1 0 0 0 0]; x=[3.304 2.5535 -0.22396 0.56711 0.06798 0.69711 -0.14572 0.7031, ... -1.635 -1.1464 -0.55064 -0.70925 -0.18781 -0.55497 -0.62887 -2.1101];% x=x_resi; % x=y; n=length(x);% Fs=n/(2*pi); Fs = 12;t = (0:n-1)/Fs;tt = (0:0.|A website built through Hugo and blogdown.">
+    
+
+    <meta name="apple-mobile-web-app-title" content="孔sysu">
+    
+    
+    
+    
+
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="/">
+    孔sysu
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/about/">
+      
+      <span>About</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="https://github.com/kongdd/.github.io">
+      
+      <span>GitHub</span>
+    </a>
+    
+    
+  </div>
+  
+  
+    
+    
+        <link
+            href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css'
+            rel='stylesheet' type='text/css' />
+    
+
+
+
+
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c.min.js"></script>
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/matlab.min.js"></script>
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+        
+        <script>hljs.configure({ languages: [] }); hljs.initHighlightingOnLoad();</script>
+    
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script>
+$(function() { 
+    function $$(selector, context) {
+        context = context || document;
+        var elements = context.querySelectorAll(selector);
+        return Array.prototype.slice.call(elements);
+    }
+    var x, comments = $$("span > .hljs-comment");
+    for (i = 0; i < comments.length; i++) {
+        x = comments[i];
+        x.parentNode.outerHTML = x.outerHTML;
+    }
+    
+    
+    
+    
+    
+});
+</script>
+
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">Fourier Matlab script</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2015-08-03. Published at: 2015-08-03.">
+        
+          Published: 2015-08-03
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    <div class="highlight"><pre class="chroma"><code class="language-matlab" data-lang="matlab"><span class="n">clc</span><span class="p">,</span> <span class="n">close</span> <span class="n">all</span>
+
+<span class="c">% load(&#39;fourier_data.mat&#39;)</span>
+<span class="c">% load(&#39;fourier_qiang.mat&#39;)</span>
+<span class="c">%%  fourier main script</span>
+<span class="c">%   Writed By Dong 2014/07/22</span>
+
+<span class="c">% x=[1 1.4 1.0 1.4 1 1.4 1.0 1.4];</span>
+<span class="c">% x=[0 3 2 0 -1];</span>
+<span class="c">% x=[1 1 1 1 0 0 0 0];</span>
+<span class="n">x</span><span class="p">=</span><span class="p">[</span><span class="mf">3.304</span> <span class="mf">2.5535</span> <span class="o">-</span><span class="mf">0.22396</span> <span class="mf">0.56711</span> <span class="mf">0.06798</span> <span class="mf">0.69711</span> <span class="o">-</span><span class="mf">0.14572</span> <span class="mf">0.7031</span><span class="p">,</span> <span class="c">...</span>
+    <span class="o">-</span><span class="mf">1.635</span> <span class="o">-</span><span class="mf">1.1464</span> <span class="o">-</span><span class="mf">0.55064</span> <span class="o">-</span><span class="mf">0.70925</span> <span class="o">-</span><span class="mf">0.18781</span> <span class="o">-</span><span class="mf">0.55497</span> <span class="o">-</span><span class="mf">0.62887</span> <span class="o">-</span><span class="mf">2.1101</span><span class="p">]</span><span class="p">;</span>
+<span class="c">% x=x_resi;</span>
+<span class="c">% x=y;</span>
+
+<span class="n">n</span><span class="p">=</span><span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="p">;</span>
+
+<span class="c">% Fs=n/(2*pi);</span>
+<span class="n">Fs</span> <span class="p">=</span> <span class="mi">12</span><span class="p">;</span>
+
+<span class="n">t</span>  <span class="p">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">Fs</span><span class="p">;</span>
+<span class="n">tt</span> <span class="p">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="mf">0.1</span><span class="p">:</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">Fs</span><span class="p">;</span>
+
+<span class="n">M</span><span class="p">=</span><span class="nb">floor</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="p">;</span>
+<span class="n">d</span><span class="p">=</span><span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="p">;</span>
+
+<span class="n">a0</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">;</span>
+<span class="n">an</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">real</span><span class="p">(</span><span class="n">d</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">;</span>
+<span class="n">bn</span> <span class="p">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="nb">imag</span><span class="p">(</span><span class="n">d</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">;</span>
+<span class="k">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">2</span><span class="o">*</span><span class="n">M</span><span class="p">,</span><span class="n">an</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="p">=</span><span class="n">an</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="k">end</span>
+
+<span class="p">[</span><span class="n">an</span><span class="p">;</span><span class="n">bn</span><span class="p">]</span><span class="p">;</span>
+
+<span class="c">%% 主频率分析</span>
+<span class="n">f</span> <span class="p">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Fs</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="p">;</span>     <span class="c">% Frequency range</span>
+<span class="n">power</span> <span class="p">=</span> <span class="n">d</span><span class="o">.*</span><span class="nb">conj</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">;</span>   <span class="c">% Power of the DFT</span>
+<span class="n">figure</span><span class="p">(</span><span class="s">&#39;</span><span class="s">pos&#39;</span><span class="p">,</span><span class="p">[</span><span class="mi">267</span>   <span class="mi">149</span>   <span class="mi">740</span>   <span class="mi">444</span><span class="p">]</span><span class="p">)</span>
+
+<span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">=</span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+<span class="n">power</span><span class="p">=</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">power</span><span class="p">)</span>
+
+<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;</span><span class="s">Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;</span><span class="s">Power&#39;</span><span class="p">)</span>
+<span class="n">title</span><span class="p">(</span><span class="s">&#39;</span><span class="s">{\bf Periodogram}&#39;</span><span class="p">)</span>
+
+
+<span class="p">[</span><span class="n">val</span><span class="p">,</span><span class="n">index</span><span class="p">]</span><span class="p">=</span><span class="n">sort</span><span class="p">(</span><span class="n">power</span><span class="p">,</span><span class="s">&#39;</span><span class="s">descend&#39;</span><span class="p">)</span><span class="p">;</span>
+<span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">cumsum</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">/</span><span class="n">sum</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="p">,</span><span class="s">&#39;</span><span class="s">bo&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">markersize&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s">&#39;</span><span class="s">markerfaceColor&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">b&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;</span><span class="s">harmonic wave number&#39;</span><span class="p">)</span><span class="p">,</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;</span><span class="s">Variance contribution&#39;</span><span class="p">)</span>
+<span class="n">set</span><span class="p">(</span><span class="n">gca</span><span class="p">,</span><span class="s">&#39;</span><span class="s">ygrid&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">on&#39;</span><span class="p">)</span>
+
+<span class="c">%%  拟合结果</span>
+<span class="n">result</span><span class="p">=</span><span class="n">a0</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="k">for</span> <span class="nb">i</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">M</span>
+    <span class="n">result</span><span class="p">=</span><span class="n">result</span><span class="o">+</span><span class="n">an</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="nb">i</span><span class="o">*</span><span class="n">tt</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="n">Fs</span><span class="p">)</span><span class="o">+</span><span class="n">bn</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="nb">i</span><span class="o">*</span><span class="n">tt</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="n">Fs</span><span class="p">)</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="c">%%  去除较为明显的三个周期性成分</span>
+<span class="n">result2</span><span class="p">=</span><span class="n">a0</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">nWave</span><span class="p">=</span><span class="mi">3</span><span class="p">;</span>        <span class="c">%三个主要简谐波</span>
+<span class="n">f</span><span class="p">=</span><span class="n">f</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="p">;</span><span class="n">T</span><span class="p">=</span><span class="mf">1.</span><span class="o">/</span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">nWave</span><span class="p">)</span><span class="p">;</span>
+
+<span class="n">T</span>               <span class="c">%周期</span>
+<span class="k">for</span> <span class="nb">i</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span>
+    <span class="n">k</span><span class="p">=</span><span class="n">index</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="p">;</span>
+    <span class="n">result2</span><span class="p">=</span><span class="n">result2</span><span class="o">+</span><span class="n">an</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">t</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="n">Fs</span><span class="p">)</span><span class="o">+</span><span class="n">bn</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">t</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">/</span><span class="n">n</span><span class="o">*</span><span class="n">Fs</span><span class="p">)</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="c">%%  图件输出</span>
+<span class="n">figure</span><span class="p">(</span><span class="s">&#39;</span><span class="s">pos&#39;</span><span class="p">,</span><span class="p">[</span><span class="mi">267</span>   <span class="mi">149</span>   <span class="mi">740</span>   <span class="mi">444</span><span class="p">]</span><span class="p">,</span><span class="s">&#39;</span><span class="s">numbertitle&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">off&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">name&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">Fourier&#39;</span><span class="p">)</span>
+<span class="c">% t=(0:n-1)*2*pi/n;</span>
+<span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+
+<span class="n">handle</span><span class="p">=</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="s">&#39;</span><span class="s">r.&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">markersize&#39;</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s">&#39;</span><span class="s">markerfaceColor&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">r&#39;</span><span class="p">)</span><span class="p">;</span><span class="n">hold</span> <span class="n">on</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">result2</span><span class="p">,</span><span class="s">&#39;</span><span class="s">b-&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">linewidth&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">handle_legend</span><span class="p">=</span><span class="n">legend</span><span class="p">(</span><span class="s">&#39;</span><span class="s">Original Data&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">Fourier Curve&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">location&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">NW&#39;</span><span class="p">)</span><span class="p">;</span>
+<span class="n">set</span><span class="p">(</span><span class="n">handle_legend</span><span class="p">,</span><span class="s">&#39;</span><span class="s">fontsize&#39;</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">uistack</span><span class="p">(</span><span class="n">handle_legend</span><span class="p">,</span><span class="s">&#39;</span><span class="s">down&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">uistack</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span><span class="s">&#39;</span><span class="s">top&#39;</span><span class="p">)</span><span class="p">;</span>
+<span class="n">set</span><span class="p">(</span><span class="n">gca</span><span class="p">,</span><span class="s">&#39;</span><span class="s">fontname&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">微软雅黑&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">fontsize&#39;</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">y_lim</span><span class="p">=</span><span class="n">get</span><span class="p">(</span><span class="n">gca</span><span class="p">,</span><span class="s">&#39;</span><span class="s">ylim&#39;</span><span class="p">)</span><span class="p">;</span>
+
+<span class="n">grid</span> <span class="n">on</span>
+<span class="n">title</span><span class="p">(</span><span class="s">&#39;</span><span class="s">Fourier Transform&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">fontname&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">微软雅黑&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">fontsize&#39;</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">fourier_resi</span><span class="p">=</span><span class="n">x</span><span class="o">&#39;</span><span class="o">-</span><span class="n">result2</span><span class="p">;</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">fourier_resi</span><span class="p">)</span>
+<span class="n">title</span><span class="p">(</span><span class="s">&#39;</span><span class="s">Residual&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">fontname&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">微软雅黑&#39;</span><span class="p">,</span><span class="s">&#39;</span><span class="s">fontsize&#39;</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#</span><span class="cp">include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;</span><span class="s">Hello world!</span><span class="s">&#34;</span><span class="p">)</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="n">wave.3</span> <span class="o">&lt;-</span> <span class="m">0.5</span> <span class="o">*</span> <span class="n">wave.1</span> <span class="o">+</span> <span class="m">0.25</span> <span class="o">*</span> <span class="n">wave.2</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">wave.3</span><span class="p">,</span><span class="n">type</span><span class="o">=</span><span class="s">&#34;</span><span class="s">l&#34;</span><span class="p">)</span> 
+<span class="nf">title</span><span class="p">(</span><span class="s">&#34;</span><span class="s">Eg complex wave&#34;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">lty</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+
+<span class="c1"># repeat.xs     &lt;- seq(-2*pi,0,pi/100)</span>
+<span class="n">wave.3.repeat</span> <span class="o">&lt;-</span> <span class="m">0.5</span><span class="o">*</span><span class="nf">sin</span><span class="p">(</span><span class="m">3</span><span class="o">*</span><span class="n">repeat.xs</span><span class="p">)</span> <span class="o">+</span> <span class="m">0.25</span><span class="o">*</span><span class="nf">sin</span><span class="p">(</span><span class="m">10</span><span class="o">*</span><span class="n">repeat.xs</span><span class="p">)</span>
+<span class="c1"># plot(xs,wave.3,type=&#34;l&#34;) </span>
+<span class="nf">title</span><span class="p">(</span><span class="s">&#34;</span><span class="s">Repeating pattern&#34;</span><span class="p">)</span>
+<span class="nf">points</span><span class="p">(</span><span class="n">repeat.xs</span><span class="p">,</span><span class="n">wave.3.repeat</span><span class="p">,</span><span class="n">type</span><span class="o">=</span><span class="s">&#34;</span><span class="s">l&#34;</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="s">&#34;</span><span class="s">red&#34;</span><span class="p">)</span> 
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">v</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="o">*</span><span class="kc">pi</span><span class="p">,</span><span class="m">0</span><span class="p">)</span><span class="p">,</span><span class="n">lty</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</code></pre></div>
+  </section>
+
+  <section>
+    
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kongdd" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>Fourier Matlab script</b>
+      <nav id="TableOfContents"></nav>
+    </div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var d = document, s = d.createElement('script');
+    s.src = '//kongdd.disqus.com/embed.js'; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+    
+<script type="text/javascript">
+(function() {
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (i = 0; i < codes.length;) {
+        code = codes[i];
+        if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+            text = code.textContent;
+            if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+                text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+                code.textContent = text;
+            }
+            if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+                /^\$(.|\s)+\$$/.test(text) ||
+                /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+                code.outerHTML = code.innerHTML; 
+                continue;
+            }
+        }
+        i++;
+    }
+})();
+</script>
+
+
+
+
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [
+            ['$', '$'],
+            ['\\(', '\\)']
+        ],
+        
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: {
+            equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"]
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+MathJax.Hub.Config({
+    
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  </body>
+</html>

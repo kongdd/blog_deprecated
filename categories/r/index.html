@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  R &ndash; 孔sysu
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="A website built through Hugo and blogdown.">
+    
+
+    <meta name="apple-mobile-web-app-title" content="孔sysu">
+    
+    
+    
+    
+
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="/">
+    孔sysu
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/about/">
+      
+      <span>About</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="https://github.com/kongdd/.github.io">
+      
+      <span>GitHub</span>
+    </a>
+    
+    
+  </div>
+  
+  
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script>
+$(function() { 
+    function $$(selector, context) {
+        context = context || document;
+        var elements = context.querySelectorAll(selector);
+        return Array.prototype.slice.call(elements);
+    }
+    var x, comments = $$("span > .hljs-comment");
+    for (i = 0; i < comments.length; i++) {
+        x = comments[i];
+        x.parentNode.outerHTML = x.outerHTML;
+    }
+    
+    
+    
+    
+    
+});
+</script>
+
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div>
+
+  <h1>R</h1>
+  
+
+  
+    
+    
+<div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
+  <div class="Subhead mb-2">
+    <div class="Subhead-heading">
+      <a href="/2019/08/03/gee-whittaker-smoother/">
+        <div class="h2 mt-1 mb-1">GEE Whittaker smoother</div>
+      </a>
+    </div>
+    <div class="Subhead-description">
+      
+
+
+<a href='/categories/r' class="muted-link">
+  <span class="Label Label--gray-darker">R</span>
+</a>
+
+
+
+<a href='/tags/r-markdown' class="muted-link">
+  <span class="Label Label--gray">R Markdown</span>
+</a>
+
+<a href='/tags/plot' class="muted-link">
+  <span class="Label Label--gray">plot</span>
+</a>
+
+<a href='/tags/regression' class="muted-link">
+  <span class="Label Label--gray">regression</span>
+</a>
+
+
+      <div class="float-md-right">
+        <span>2019-08-03</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-gray">
+    
+    1 Whittaker介绍2 bisquare权重调整(Modified bisquare weights updating )3 生成新的时间序列 (Generating new time series)4 References1 Whittaker介绍不可否认Savitzky-Golay (SG)是一个非常优秀的平滑算法，奈何计算效率太低，使其在Google Earth Engine (GEE) 根本无法使用。两年过去了，很多GEE developers依然执着于SG，不断问SG在GEE上如何应用。
+由于SG是一个逐步回归，回归次数较多，因此他通常会比HANTS, Whittaker慢几十倍，在GEE上应用基本无望。
+本文主要介绍一种改进的Whittaker，特意为GEE设计的一个平滑算法: weighted Whittaker with dynamiclambda。它主要在两个方面对Whittaker进行了改进:
+自动优化Whittaker的参数lambda，根据植被曲线特征指数(mean, sd, cv, skewness and kurtosis)
+加入weights updating function (modified Bisquare)
+The calibration and validation script in R language is available in https://github.com/kongdd/gee_whittaker.
+The GEE Whittaker is available in https://github.
+    <a class="muted-link" href="/2019/08/03/gee-whittaker-smoother/">…</a>
+  </div>
+</div>
+
+  
+    
+    
+<div class="rounded-2 box-shadow-medium px-3 pb-2 pt-2 mb-3">
+  <div class="Subhead mb-2">
+    <div class="Subhead-heading">
+      <a href="/2015/08/03/fourier-curve-fitting-for-periodic-component/">
+        <div class="h2 mt-1 mb-1">Fourier curve fitting for periodic component</div>
+      </a>
+    </div>
+    <div class="Subhead-description">
+      
+
+
+<a href='/categories/r' class="muted-link">
+  <span class="Label Label--gray-darker">R</span>
+</a>
+
+
+
+<a href='/tags/r-markdown' class="muted-link">
+  <span class="Label Label--gray">R Markdown</span>
+</a>
+
+<a href='/tags/plot' class="muted-link">
+  <span class="Label Label--gray">plot</span>
+</a>
+
+<a href='/tags/regression' class="muted-link">
+  <span class="Label Label--gray">regression</span>
+</a>
+
+
+      <div class="float-md-right">
+        <span>2015-08-03</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-gray">
+    
+    1 傅里叶变换1.1 离散型傅里叶变换1.2 快速傅里叶变换2 References1 傅里叶变换#include &lt;stdio.h&gt;int main(void){printf(&quot;Hello world!&quot;),return 0;}wave.3 &lt;- 0.5 * wave.1 + 0.25 * wave.2plot(xs,wave.3,type=&quot;l&quot;) title(&quot;Eg complex wave&quot;)abline(h=0,lty=3)repeat.xs &lt;- seq(-2*pi,0,pi/100)wave.3.repeat &lt;- 0.5*sin(3*repeat.xs) + 0.25*sin(10*repeat.xs)plot(xs,wave.3,type=&quot;l&quot;) title(&quot;Repeating pattern&quot;)points(repeat.xs,wave.3.repeat,type=&quot;l&quot;,col=&quot;red&quot;) abline(h=0,v=c(-2*pi,0),lty=3)1.1 离散型傅里叶变换主要公式：\[\begin{equation}X t=\frac{a_{0}}{2}+\sum_{i=1}^{m}\left[a_{i} \cos \left(\frac{2 \pi i}{N} t\right)+b_{i} \sin \left(\frac{2 \pi i}{N} t\right)\right]\end{equation}\]
+    <a class="muted-link" href="/2015/08/03/fourier-curve-fitting-for-periodic-component/">…</a>
+  </div>
+</div>
+
+  
+
+  
+  
+
+
+
+
+</div>
+
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+
+  <div class="Box Box--blue p-2 mb-3 mt-5">
+    <a href="/tags/" class="link-gray-dark">
+      <h4>Tags</h4>
+    </a>
+    
+    <span class="css-truncate no-wrap m-1 pl-1">
+      <a href="/tags/plot" class="link-gray text-emphasized css-truncate-target"><span class="">Plot</span></a>
+      <span class="text-right Counter">2</span>
+    </span>
+    
+    <span class="css-truncate no-wrap m-1 pl-1">
+      <a href="/tags/r-markdown" class="link-gray text-emphasized css-truncate-target"><span class="">R markdown</span></a>
+      <span class="text-right Counter">2</span>
+    </span>
+    
+    <span class="css-truncate no-wrap m-1 pl-1">
+      <a href="/tags/regression" class="link-gray text-emphasized css-truncate-target"><span class="">Regression</span></a>
+      <span class="text-right Counter">2</span>
+    </span>
+    
+  </div>
+
+
+
+
+  <div class="Box Box--blue p-2 mb-3">
+    <a href="/categories/" class="link-gray-dark">
+      <h4>Categories</h4>
+    </a>
+    
+    <span class="css-truncate no-wrap m-1 pl-1">
+      <a href="/categories/r" class="link-gray text-emphasized css-truncate-target"><span class="">R</span></a>
+      <span class="text-right Counter">2</span>
+    </span>
+    
+  </div>
+
+
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+    
+  </body>
+</html>

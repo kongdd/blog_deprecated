@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+  Fourier curve fitting for periodic component &ndash; 孔sysu
+
+    </title>
+    
+    
+    <meta name="description" property="og:description" content="1 傅里叶变换1.1 离散型傅里叶变换1.2 快速傅里叶变换2 References1 傅里叶变换#include &amp;lt;stdio.h&amp;gt;int main(void){printf(&amp;quot;Hello world!&amp;quot;),return 0;}wave.3 &amp;lt;- 0.5 * wave.1 &#43; 0.25 * wave.2plot(xs,wave.3,type=&amp;quot;l&amp;quot;) title(&amp;quot;Eg complex wave&amp;quot;)abline(h=0,lty=3)repeat.xs &amp;lt;- seq(-2*pi,0,pi/100)wave.3.repeat &amp;lt;- 0.5*sin(3*repeat.xs) &#43; 0.25*sin(10*repeat.xs)plot(xs,wave.3,type=&amp;quot;l&amp;quot;) title(&amp;quot;Repeating pattern&amp;quot;)points(repeat.xs,wave.3.repeat,type=&amp;quot;l&amp;quot;,col=&amp;quot;red&amp;quot;) abline(h=0,v=c(-2*pi,0),lty=3)1.1 离散型傅里叶变换主要公式：\[\begin{equation}X t=\frac{a_{0}}{2}&#43;\sum_{i=1}^{m}\left[a_{i} \cos \left(\frac{2 \pi i}{N} t\right)&#43;b_{i} \sin \left(\frac{2 \pi i}{N} t\right)\right]\end{equation}\]|A website built through Hugo and blogdown.">
+    
+
+    <meta name="apple-mobile-web-app-title" content="孔sysu">
+    
+    
+    
+    
+
+
+    <link rel="stylesheet" href="/assets/syntax.css">
+    <link rel="stylesheet" href="/assets/primer-build.css">
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+
+
+  <body class="bg-gray">
+    <div id="holy" class="container-lg bg-white h-100">
+
+      <div id="header" class="px-1 bg-white">
+        <nav class="UnderlineNav UnderlineNav--right px-2">
+  <a class="UnderlineNav-actions muted-link h2" href="/">
+    孔sysu
+  </a>
+
+  
+  
+  <div class="UnderlineNav-body">
+    
+    
+    
+    <a class="UnderlineNav-item " href="/about/">
+      
+      <span>About</span>
+    </a>
+    
+    
+    
+    
+    <a class="UnderlineNav-item " href="https://github.com/kongdd/.github.io">
+      
+      <span>GitHub</span>
+    </a>
+    
+    
+  </div>
+  
+  
+    
+    
+        <link
+            href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css'
+            rel='stylesheet' type='text/css' />
+    
+
+
+
+
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c.min.js"></script>
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/matlab.min.js"></script>
+        
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+        
+        <script>hljs.configure({ languages: [] }); hljs.initHighlightingOnLoad();</script>
+    
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script>
+$(function() { 
+    function $$(selector, context) {
+        context = context || document;
+        var elements = context.querySelectorAll(selector);
+        return Array.prototype.slice.call(elements);
+    }
+    var x, comments = $$("span > .hljs-comment");
+    for (i = 0; i < comments.length; i++) {
+        x = comments[i];
+        x.parentNode.outerHTML = x.outerHTML;
+    }
+    
+    
+    
+    
+    
+});
+</script>
+
+</nav>
+
+      </div>
+
+      <div role="main" id="main" class="holy-main markdown-body px-4 bg-white">
+        
+
+<div class="Subhead">
+  <div class="Subhead-heading">
+    <div class="h1 mt-3 mb-1">Fourier curve fitting for periodic component</div>
+  </div>
+  <div class="Subhead-description">
+    
+
+
+<a href='/categories/r' class="muted-link">
+  <span class="Label Label--gray-darker">R</span>
+</a>
+
+
+
+<a href='/tags/r-markdown' class="muted-link">
+  <span class="Label Label--gray">R Markdown</span>
+</a>
+
+<a href='/tags/plot' class="muted-link">
+  <span class="Label Label--gray">plot</span>
+</a>
+
+<a href='/tags/regression' class="muted-link">
+  <span class="Label Label--gray">regression</span>
+</a>
+
+
+
+    
+    <div class="float-md-right">
+      <span title="Lastmod: 2015-08-03. Published at: 2015-08-03.">
+        
+          Published: 2015-08-03
+        
+      </span>
+    </div>
+    
+  </div>
+</div>
+<article>
+  
+  <section class="pb-6 mb-3 border-bottom">
+    
+
+<div id="TOC">
+<ul>
+<li><a href="#傅里叶变换"><span class="toc-section-number">1</span> 傅里叶变换</a><ul>
+<li><a href="#离散型傅里叶变换"><span class="toc-section-number">1.1</span> 离散型傅里叶变换</a></li>
+<li><a href="#快速傅里叶变换"><span class="toc-section-number">1.2</span> 快速傅里叶变换</a></li>
+</ul></li>
+<li><a href="#references"><span class="toc-section-number">2</span> References</a></li>
+</ul>
+</div>
+
+<div id="傅里叶变换" class="section level1">
+<h1><span class="header-section-number">1</span> 傅里叶变换</h1>
+<pre class="c"><code>#include &lt;stdio.h&gt;
+int main(void)
+{
+  printf(&quot;Hello world!&quot;),
+  return 0;
+}</code></pre>
+<pre class="r"><code>wave.3 &lt;- 0.5 * wave.1 + 0.25 * wave.2
+plot(xs,wave.3,type=&quot;l&quot;) 
+title(&quot;Eg complex wave&quot;)
+abline(h=0,lty=3)
+
+repeat.xs     &lt;- seq(-2*pi,0,pi/100)
+wave.3.repeat &lt;- 0.5*sin(3*repeat.xs) + 0.25*sin(10*repeat.xs)
+plot(xs,wave.3,type=&quot;l&quot;) 
+title(&quot;Repeating pattern&quot;)
+points(repeat.xs,wave.3.repeat,type=&quot;l&quot;,col=&quot;red&quot;) 
+abline(h=0,v=c(-2*pi,0),lty=3)</code></pre>
+<div id="离散型傅里叶变换" class="section level2">
+<h2><span class="header-section-number">1.1</span> 离散型傅里叶变换</h2>
+<p><strong>主要公式：</strong>
+<span class="math display">\[
+\begin{equation}
+X t=\frac{a_{0}}{2}+\sum_{i=1}^{m}\left[a_{i} \cos \left(\frac{2 \pi i}{N} t\right)+b_{i} \sin \left(\frac{2 \pi i}{N} t\right)\right]
+\end{equation}
+\]</span></p>
+<ul>
+<li><p>频率<span class="math inline">\(fs=1/T\)</span>，采样频率，单位时间发生的次数，单位为赫兹Hz。例如一般mp3音乐采样频率为44,100 Hz</p></li>
+<li><p>周期<span class="math inline">\(T=1/f\)</span></p></li>
+<li><p>角速度<span class="math inline">\(w = 2πf\)</span></p></li>
+</ul>
+</div>
+<div id="快速傅里叶变换" class="section level2">
+<h2><span class="header-section-number">1.2</span> 快速傅里叶变换</h2>
+<p><span class="math display">\[
+\begin{equation}
+x[i]=\sum_{k=0}^{N / 2} \operatorname{Re} \overline{X}[k] \cos (2 \pi k i / N)+\sum_{k=0}^{N / 2} \operatorname{Im} \overline{X}[k] \sin (2 \pi k i / N)
+\end{equation}
+\]</span></p>
+<p>其中<span class="math inline">\(\overline{X}[k]\)</span>是快速傅里叶变化的时间序列、<span class="math inline">\(k\)</span>为谐波数、<span class="math inline">\(i\)</span>代表时间、<span class="math inline">\(N\)</span>为时间序列的长度；</p>
+<p>令<span class="math inline">\(z_{i} = 2 \pi i / N\)</span>，则<code>Eq. 1</code>变身为：
+<span class="math display">\[
+\begin{equation}
+x[i]=\sum_{k=0}^{N / 2} \operatorname{Re} \overline{X}[k] \cos (k z_i)+\sum_{k=0}^{N / 2} \operatorname{Im} \overline{X}[k] \sin (k z_i)
+\end{equation}
+\]</span></p>
+<p>其中
+<span class="math display">\[
+\begin{equation}
+\begin{array}{l}{
+\operatorname{Re} \overline{X}[k]=\frac{\operatorname{Re} X[k]}{N / 2}}, 
+a_n= \operatorname{Re} \overline{X}\\ 
+{\operatorname{Im} \overline{X}[k]=-\frac{\operatorname{Im} X[k]}{N / 2}}, 
+b_n= \operatorname{Im} \overline{X}\end{array}
+\end{equation}
+\]</span></p>
+<p>当$k=0, or N/2 $时
+<span class="math display">\[
+\begin{equation}
+\begin{aligned} \operatorname{Re} \overline{X}[0] &amp;=\frac{\operatorname{Re} X[0]}{N} \\ \operatorname{Re} \overline{X}[N / 2] &amp;=\frac{\operatorname{Re} X[N / 2]}{N} \end{aligned}
+\end{equation}
+\]</span></p>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1><span class="header-section-number">2</span> References</h1>
+<ul>
+<li><a href="https://blog.csdn.net/v_JULY_v/article/details/6196862">十、从头到尾彻底理解傅里叶变换算法、上</a></li>
+</ul>
+</div>
+
+  </section>
+
+  <section>
+    
+      <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "kongdd" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+  </section>
+</article>
+
+      </div>
+
+      <div id="side" class="pr-1 bg-white">
+        <aside class="pr-3">
+          
+  
+    <div id="toc" class="Box Box--blue mb-3">
+      <b>Fourier curve fitting for periodic component</b>
+      
+    </div>
+  
+
+  
+    <div>
+      
+    </div>
+  
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var d = document, s = d.createElement('script');
+    s.src = '//kongdd.disqus.com/embed.js'; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+        </aside>
+      </div>
+
+      <div id="footer" class="pt-2 pb-3 bg-white text-center">
+        
+
+  <span class="text-small text-gray">
+    
+
+    Powered by the
+    <a href="https://github.com/qqhann/hugo-primer" class="link-gray-dark">Hugo-Primer</a> theme for
+    <a href="https://gohugo.io" class="link-gray-dark">Hugo</a>.
+  </span>
+
+
+      </div>
+    </div>
+    
+<script type="text/javascript">
+(function() {
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (i = 0; i < codes.length;) {
+        code = codes[i];
+        if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+            text = code.textContent;
+            if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+                text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+                code.textContent = text;
+            }
+            if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+                /^\$(.|\s)+\$$/.test(text) ||
+                /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+                code.outerHTML = code.innerHTML; 
+                continue;
+            }
+        }
+        i++;
+    }
+})();
+</script>
+
+
+
+
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [
+            ['$', '$'],
+            ['\\(', '\\)']
+        ],
+        
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: {
+            equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "AMSsymbols.js"]
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+MathJax.Hub.Config({
+    
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  </body>
+</html>
