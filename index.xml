@@ -32,7 +32,11 @@ The GEE Whittaker is available in https://github.</description>
       <pubDate>Mon, 03 Aug 2015 21:13:14 -0500</pubDate>
       
       <guid>/2015/08/03/fourier-curve-fitting-for-periodic-component/</guid>
-      <description>1 傅里叶变换1.1 离散型傅里叶变换1.2 快速傅里叶变换2 References1 傅里叶变换#include &amp;lt;stdio.h&amp;gt;int main(void){printf(&amp;quot;Hello world!&amp;quot;),return 0;}wave.3 &amp;lt;- 0.5 * wave.1 + 0.25 * wave.2plot(xs,wave.3,type=&amp;quot;l&amp;quot;) title(&amp;quot;Eg complex wave&amp;quot;)abline(h=0,lty=3)repeat.xs &amp;lt;- seq(-2*pi,0,pi/100)wave.3.repeat &amp;lt;- 0.5*sin(3*repeat.xs) + 0.25*sin(10*repeat.xs)plot(xs,wave.3,type=&amp;quot;l&amp;quot;) title(&amp;quot;Repeating pattern&amp;quot;)points(repeat.xs,wave.3.repeat,type=&amp;quot;l&amp;quot;,col=&amp;quot;red&amp;quot;) abline(h=0,v=c(-2*pi,0),lty=3)1.1 离散型傅里叶变换主要公式：\[\begin{equation}X t=\frac{a_{0}}{2}+\sum_{i=1}^{m}\left[a_{i} \cos \left(\frac{2 \pi i}{N} t\right)+b_{i} \sin \left(\frac{2 \pi i}{N} t\right)\right]\end{equation}\]</description>
+      <description>1 傅里叶变换1.1 离散型傅里叶变换1.2 快速傅里叶变换2 References1 傅里叶变换1.1 离散型傅里叶变换主要公式：\[\begin{equation}X t=\frac{a_{0}}{2}+\sum_{i=1}^{m}\left[a_{i} \cos \left(\frac{2 \pi i}{N} t\right)+b_{i} \sin \left(\frac{2 \pi i}{N} t\right)\right]\end{equation}\]
+频率\(fs=1/T\)，采样频率，单位时间发生的次数，单位为赫兹Hz。例如一般mp3音乐采样频率为44,100 Hz
+周期\(T=1/f\)
+角速度\(w = 2πf\)
+1.2 快速傅里叶变换\[\begin{equation}x[i]=\sum_{k=0}^{N / 2} \operatorname{Re} \overline{X}[k] \cos (2 \pi k i / N)+\sum_{k=0}^{N / 2} \operatorname{Im} \overline{X}[k] \sin (2 \pi k i / N)\end{equation}\]</description>
     </item>
     
     <item>
